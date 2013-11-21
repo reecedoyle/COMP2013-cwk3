@@ -128,8 +128,20 @@ a:active {
   text-align: center;
 }
 
+canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
 #container {
   padding: 1em;
+  <!--
+  margin: 0 auto;
+  width: 100%;
+  -->
   margin: 0 0 1em 0;
   background-color: white;
 }
@@ -192,6 +204,7 @@ h1.content {
 
 .elem {
   border: solid  #6AC5AC 3px;
+  background-color: #6AC5AC;
   position: relative;
 }
 
@@ -250,13 +263,13 @@ h1.content {
 .column {
     display: inline-block;
     vertical-align: top;
-    width: 75%;
+    width: 84%;
 }
 
 nav{
     display: inline-block;
     vertical-align: top;
-    width: 24%;
+    width: 15%;
 }
 
 a.nav:before {
