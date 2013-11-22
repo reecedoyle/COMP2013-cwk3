@@ -1,32 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<script src="//cdnjs.cloudflare.com/ajax/libs/fabric.js/1.3.0/fabric.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.3.0/fabric.min.js"></script>
 <title>TurtleBot - Reece Doyle</title>
 <link rel="stylesheet" type="text/css" href="mystyle.css">
 </head>
 <body style="overflow: hidden">
 	<h1>TurtleBot</h1>
 	<canvas id="canvas"></canvas>
-	<script>
-		(function(){
-			var canvas = this.__canvas = new fabric.Canvas('c');
+	<script> (function() {
+	
+			var canvas = new fabric.Canvas('c');
+			var spacing = 5;
+			canvas.setHeight(window.innerHeight);
+			canvas.setWidth(window.innerWidth);
 			var triangle = new fabric.Triangle({
-			    left : x,
-			    top : y,
-			    width : 100,
-			    height : 100,
-			    opacity : 1,
-			    selectable : false
-			});
-			
+				  left: window.innerWidth/2,
+				  top: window.innerHeight/2,
+				  angle: 0,
+				  height: 20,
+				  width: 20,
+				  fill: 'blue'
+				  }); 
+				  
+            var trail = new fabric.Rect({
+			left : triangle.left,
+			top: triangle.top+spacing,
+			angle : 0,
+			height: 1,
+			width:  1,
+			fill: 'red'
+			});					  
+			canvas.add(triangle);
+/*
 			var map = []; // Or you could call it "key"
 			onkeydown = onkeyup = function(e){
 			    e = e || event; // to deal with IE
 			    map[e.keyCode] = e.type == 'keydown';
 			    /*insert conditional here*/
-			}
+			//}
 
 
 
