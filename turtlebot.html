@@ -8,43 +8,76 @@
 </head>
 <body style="overflow: hidden">
 	<h1>TurtleBot</h1>
-	<canvas id="canvas"></canvas>
+	<canvas id="c"></canvas>
 	<script> (function() {
 	
 			var canvas = new fabric.Canvas('c');
 			var spacing = 5;
 			canvas.setHeight(window.innerHeight);
 			canvas.setWidth(window.innerWidth);
+			canvas.backgroundColor="black";
 			var triangle = new fabric.Triangle({
 				  left: window.innerWidth/2,
 				  top: window.innerHeight/2,
 				  angle: 0,
-				  height: 20,
+				  height: 25,
 				  width: 20,
-				  fill: 'blue'
-				  }); 
+				  selectable: false
+			}); 
 				  
             var trail = new fabric.Rect({
-			left : triangle.left,
-			top: triangle.top+spacing,
-			angle : 0,
-			height: 1,
-			width:  1,
-			fill: 'red'
-			});					  
+				left : triangle.left,
+				top: triangle.top+spacing,
+				angle : 0,
+				height: 1,
+				width:  1,
+				fill: 'red'
+			});				
+			triangle.setGradient('fill', {
+				x1: triangle.width/2,
+				y1: 0,
+				x2: triangle.width/2,
+				y2: triangle.height,
+				colorStops: {
+					0: "red",
+					0.1: "orange",
+				    0.2: "yellow",
+				    0.3: "green",
+				    0.4: "blue",
+				    0.5: "purple"
+				}
+			});	  
 			canvas.add(triangle);
-/*
+
 			var map = []; // Or you could call it "key"
-			onkeydown = onkeyup = function(e){
+			document.onkeydown = document.onkeyup = function(e){
 			    e = e || event; // to deal with IE
 			    map[e.keyCode] = e.type == 'keydown';
-			    /*insert conditional here*/
-			//}
+			    
+			    if(map[38]){ // UP
+			    	triangle.setTop(triangle.top-5);
+				}
+
+				if(map[40]){ // DOWN
+			    	
+				}
+
+				if(map[37]){ // LEFT
+			    	triangle.setAngle(triangle.angle-5);
+				}
+
+				if(map[39]){ // RIGHT
+			    	triangle.setAngle(triangle.angle+5);
+				}
+				canvas.renderAll();
+			}
 
 
 
 
-			});
+
+
+			}) ();
 
 
 
