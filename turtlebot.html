@@ -7,15 +7,28 @@
 <link rel="stylesheet" type="text/css" href="mystyle.css">
 </head>
 <body style="overflow: hidden">
-	<h1>TurtleBot</h1>
+	<h1>Merry TurtleBotMas to you all!</h1>
 	<canvas id="c"></canvas>
+	<img src="christmastree.gif" id="xmas_tree">
 	<script> (function() {
-	
+
 			var canvas = new fabric.Canvas('c');
-			var spacing = 5;
+			var speed = 10;
 			canvas.setHeight(window.innerHeight);
 			canvas.setWidth(window.innerWidth);
 			canvas.backgroundColor="black";
+
+			var imgElement = document.getElementById('xmas_tree');
+			var imgInstance = new fabric.Image(imgElement, {
+				left: window.innerWidth/2,
+				top: window.innerHeight/2,
+				angle: 0,
+				opacity: 1
+			});
+			canvas.add(imgInstance);
+
+
+
 			var triangle = new fabric.Triangle({
 				  left: window.innerWidth/2,
 				  top: window.innerHeight/2,
@@ -24,15 +37,7 @@
 				  width: 20,
 				  selectable: false
 			}); 
-				  
-            var trail = new fabric.Rect({
-				left : triangle.left,
-				top: triangle.top+spacing,
-				angle : 0,
-				height: 1,
-				width:  1,
-				fill: 'red'
-			});				
+				  			
 			triangle.setGradient('fill', {
 				x1: triangle.width/2,
 				y1: 0,
@@ -49,25 +54,46 @@
 			});	  
 			canvas.add(triangle);
 
-			var map = []; // Or you could call it "key"
+			var keys = []; // Or you could call it "key"
 			document.onkeydown = document.onkeyup = function(e){
 			    e = e || event; // to deal with IE
-			    map[e.keyCode] = e.type == 'keydown';
+			    keys[e.keyCode] = e.type == 'keydown';
 			    
-			    if(map[38]){ // UP
-			    	triangle.setTop(triangle.top-5);
+			    if(keys[38]){ // UP
+			    	var lastX = triangle.left;
+			    	var lastY = triangle.top;
+			    	triangle.setTop(triangle.top-(speed*Math.cos((triangle.angle*Math.PI)/180)));
+			    	triangle.setLeft(triangle.left+(speed*Math.sin((triangle.angle*Math.PI)/180)));
+			    	var path = new fabric.Path('M 0 0 L 0 2 L 2 2 L 2 0 z');
+			    	path.set({fill: '#EEB422', stroke: '#EEB422', left: triangle.left, top: triangle.top});
+			    	canvas.add(path);
+			    	triangle.bringToFront();
 				}
 
-				if(map[40]){ // DOWN
-			    	
+				if(keys[40]){ // DOWN
+					var lastX = triangle.left;
+			    	var lastY = triangle.top;
+			    	triangle.setTop(triangle.top+(speed*Math.cos((triangle.angle*Math.PI)/180)));
+			    	triangle.setLeft(triangle.left-(speed*Math.sin((triangle.angle*Math.PI)/180)));
+			    	var path = new fabric.Path('M 0 0 L 0 2 L 2 2 L 2 0 z');
+			    	path.set({fill: 'red', stroke: 'red', left: triangle.left, top: triangle.top});
+			    	canvas.add(path);
+			    	triangle.bringToFront();
 				}
 
-				if(map[37]){ // LEFT
+				if(keys[37]){ // LEFT
 			    	triangle.setAngle(triangle.angle-5);
 				}
 
-				if(map[39]){ // RIGHT
+				if(keys[39]){ // RIGHT
 			    	triangle.setAngle(triangle.angle+5);
+				}
+
+				if(keys[32]){ // RESET
+			    	canvas.clear();
+			    	canvas.add(imgInstance);
+			    	triangle.set({angle: 0, left: window.innerWidth/2, top: window.innerHeight/2});
+			    	canvas.add(triangle);
 				}
 				canvas.renderAll();
 			}
