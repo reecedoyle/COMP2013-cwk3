@@ -8,117 +8,152 @@
 </head>
 <body style="overflow: hidden">
 	
-	<h1><script src="http://h1.flashvortex.com/display.php?id=2_1385398126_65201_396_0_480_60_8_1_112" type="text/javascript"></script></h1>
-	<canvas id="c"></canvas>
-	<img src="christmastree.gif" id="xmas_tree">
-	<script> (function() {
+	<h1>TurtleBot: Christmas Edition</h1>
 
-			var canvas = new fabric.Canvas('c');
-			var speed = 10;
-			canvas.setHeight(window.innerHeight);
-			canvas.setWidth(window.innerWidth);
-			canvas.backgroundColor="black";
+	<section class="container elem">
+		<nav>
+    		<ul>
+    			<li>
+					<a href="index.html">Home</a>
+	      		</li>
+	      		<li>
+	        		<a href="turtlebot.html">TurtleBot</a>
+	      		</li>
+	    	</ul>
+	  	</nav>
 
-			var imgElement = document.getElementById('xmas_tree');
-			var imgInstance = new fabric.Image(imgElement, {
-				left: window.innerWidth/2,
-				top: window.innerHeight/2,
-				angle: 0,
-				opacity: 1
-			});
-			canvas.add(imgInstance);
+	  	<section class="column">
 
+	  		<section>
 
+				<canvas id="c"></canvas>
+				<img src="christmastree.gif" id="xmas_tree">
+				<script> (function() {
 
-			var triangle = new fabric.Triangle({
-				  left: window.innerWidth/2,
-				  top: window.innerHeight/2,
-				  angle: 0,
-				  height: 25,
-				  width: 20,
-				  selectable: false
-			}); 
-				  			
-			triangle.setGradient('fill', {
-				x1: triangle.width/2,
-				y1: 0,
-				x2: triangle.width/2,
-				y2: triangle.height,
-				colorStops: {
-					0: "red",
-					0.1: "orange",
-				    0.2: "yellow",
-				    0.3: "green",
-				    0.4: "blue",
-				    0.5: "purple"
-				}
-			});	  
-			canvas.add(triangle);
+						var canvas = new fabric.Canvas('c');
+						var speed = 10;
+						var count = 0;
+						canvas.setHeight(window.innerHeight);
+						canvas.setWidth(window.innerWidth);
+						canvas.backgroundColor="black";
 
-			var keys = []; // Or you could call it "key"
-			document.onkeydown = document.onkeyup = function(e){
-			    e = e || event; // to deal with IE
-			    keys[e.keyCode] = e.type == 'keydown';
-			    
-			    if(keys[38]){ // UP
-			    	var lastX = triangle.left;
-			    	var lastY = triangle.top;
-			    	triangle.setTop(triangle.top-(speed*Math.cos((triangle.angle*Math.PI)/180)));
-			    	triangle.setLeft(triangle.left+(speed*Math.sin((triangle.angle*Math.PI)/180)));
-			    	var path = new fabric.Path('M 0 0 L 0 2 L 2 2 L 2 0 z');
-			    	path.set({fill: '#EEB422', stroke: '#EEB422', left: triangle.left, top: triangle.top});
-			    	canvas.add(path);
-			    	triangle.bringToFront();
-				}
-
-				if(keys[40]){ // DOWN
-					var lastX = triangle.left;
-			    	var lastY = triangle.top;
-			    	triangle.setTop(triangle.top+(speed*Math.cos((triangle.angle*Math.PI)/180)));
-			    	triangle.setLeft(triangle.left-(speed*Math.sin((triangle.angle*Math.PI)/180)));
-			    	var path = new fabric.Path('M 0 0 L 0 2 L 2 2 L 2 0 z');
-			    	path.set({fill: 'red', stroke: 'red', left: triangle.left, top: triangle.top});
-			    	canvas.add(path);
-			    	triangle.bringToFront();
-				}
-
-				if(keys[37]){ // LEFT
-			    	triangle.setAngle(triangle.angle-speed);
-				}
-
-				if(keys[39]){ // RIGHT
-			    	triangle.setAngle(triangle.angle+speed);
-				}
-
-				if(keys[32]){ // RESET
-			    	canvas.clear();
-			    	canvas.add(imgInstance);
-			    	triangle.set({angle: 0, left: window.innerWidth/2, top: window.innerHeight/2});
-			    	canvas.add(triangle);
-				}
-				canvas.renderAll();
-			}
+						var imgElement = document.getElementById('xmas_tree');
+						var imgInstance = new fabric.Image(imgElement, {
+							left: window.innerWidth/2,
+							top: window.innerHeight/2,
+							angle: 0,
+							opacity: 1
+						});
+						canvas.add(imgInstance);
 
 
 
+						var triangle = new fabric.Triangle({
+							  left: window.innerWidth/2,
+							  top: window.innerHeight/2,
+							  angle: 0,
+							  height: 25,
+							  width: 20,
+							  selectable: false
+						}); 
+							  			
+						triangle.setGradient('fill', {
+							x1: triangle.width/2,
+							y1: 0,
+							x2: triangle.width/2,
+							y2: triangle.height,
+							colorStops: {
+								0: "red",
+								0.1: "orange",
+							    0.2: "yellow",
+							    0.3: "green",
+							    0.4: "blue",
+							    0.5: "purple"
+							}
+						});	  
+						canvas.add(triangle);
+
+						var keys = []; // Or you could call it "key"
+						document.onkeydown = document.onkeyup = function(e){
+						    e = e || event; // to deal with IE
+						    keys[e.keyCode] = (e.type == 'keydown');
+						    
+						    if(keys[38]){ // UP
+						    	var lastX = triangle.left;
+						    	var lastY = triangle.top;
+						    	triangle.setTop(triangle.top-(speed*Math.cos((triangle.angle*Math.PI)/180)));
+						    	triangle.setLeft(triangle.left+(speed*Math.sin((triangle.angle*Math.PI)/180)));
+						    	var path = new fabric.Path('M 0 0 L 0 2 L 2 2 L 2 0 z');
+						    	path.set({fill: '#EEB422', stroke: '#EEB422', left: triangle.left, top: triangle.top});
+						    	canvas.add(path);
+						    	if(count == 10){
+						    		canvas.add(new fabric.Circle({radius: 10, fill: 'red', left: triangle.left, top: triangle.top}));
+						    		count = 0;
+						    	}
+						    	else{
+						    		count++;
+						    	}
+						    	triangle.bringToFront();
+							}
+
+							if(keys[40]){ // DOWN
+								var lastX = triangle.left;
+						    	var lastY = triangle.top;
+						    	triangle.setTop(triangle.top+(speed*Math.cos((triangle.angle*Math.PI)/180)));
+						    	triangle.setLeft(triangle.left-(speed*Math.sin((triangle.angle*Math.PI)/180)));
+						    	var path = new fabric.Path('M 0 0 L 0 2 L 2 2 L 2 0 z');
+						    	path.set({fill: 'red', stroke: 'red', left: triangle.left, top: triangle.top});
+						    	canvas.add(path);
+						    	if(count == 10){
+						    		canvas.add(new fabric.Circle({radius: 10, fill: '#EEB422', left: triangle.left, top: triangle.top}));
+						    		count = 0;
+						    	}
+						    	else{
+						    		count++;
+						    	}
+						    	triangle.bringToFront();
+							}
+
+							if(keys[37]){ // LEFT
+						    	triangle.setAngle(triangle.angle-speed);
+							}
+
+							if(keys[39]){ // RIGHT
+						    	triangle.setAngle(triangle.angle+speed);
+							}
+
+							if(keys[32]){ // RESET
+						    	canvas.clear();
+						    	canvas.add(imgInstance);
+						    	triangle.set({angle: 0, left: window.innerWidth/2, top: window.innerHeight/2});
+						    	canvas.add(triangle);
+							}
+							canvas.renderAll();
+						}
 
 
 
-			}) ();
+
+
+
+						}) ();
 
 
 
 
 
 
-			
+						
 
 
 
 
 
-	</script>
+				</script>
 
+			</section>
+		</section>
+	</section>
 
 
 </body>
